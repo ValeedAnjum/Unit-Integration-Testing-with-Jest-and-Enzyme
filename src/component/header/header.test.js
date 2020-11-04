@@ -1,5 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
+import { findByTestAttr } from "../../../Utils/index";
 import Header from "./index";
 
 const setUp = (props = {}) => {
@@ -8,15 +9,17 @@ const setUp = (props = {}) => {
 };
 
 describe("Header Component", () => {
+  let component;
+  beforeEach(() => {
+    component = setUp();
+  });
   it("Should render without erros", () => {
-    const component = setUp();
-    const wrapper = component.find(".headerComponent");
+    const wrapper = findByTestAttr(component, "headerComponent");
     expect(wrapper.length).toBe(1);
   });
 
   it("Should render a logo", () => {
-    const component = setUp();
-    const wrapper = component.find(".logoIMG");
+    const wrapper = findByTestAttr(component, "logoIMG");
     expect(wrapper.length).toBe(1);
   });
 });
