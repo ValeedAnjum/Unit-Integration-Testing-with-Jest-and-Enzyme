@@ -1,11 +1,25 @@
-import React from "react";
+// import React from "react";
 import { shallow } from "enzyme";
+import { findByTestAttr } from "../../../Utils/index";
 import Header from "./index";
 
-test("The component should render", () => {
-  expect(1).toBe(1);
-});
+const setUp = (props = {}) => {
+  const component = shallow(<Header {...props} />);
+  return component;
+};
 
-it("want component should render", () => {
-  expect("Anjum").toBe("Anjum");
+describe("Header Component", () => {
+  let component;
+  beforeEach(() => {
+    component = setUp();
+  });
+  it("Should render without erros", () => {
+    const wrapper = findByTestAttr(component, "headerComponent");
+    expect(wrapper.length).toBe(1);
+  });
+
+  it("Should render a logo", () => {
+    const wrapper = findByTestAttr(component, "logoIMG");
+    expect(wrapper.length).toBe(1);
+  });
 });
