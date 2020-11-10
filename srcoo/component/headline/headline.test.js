@@ -2,7 +2,9 @@ import React from "react";
 import { shallow } from "enzyme";
 import Headline from "./index";
 
-import { findByTestAtrr, checkProps } from "./../../../Utils";
+import checkPropTypes from "check-prop-types";
+
+import { findByTestAttr } from "../../../Utils/index";
 
 const setUp = (props = {}) => {
   const component = shallow(<Headline {...props} />);
@@ -11,22 +13,28 @@ const setUp = (props = {}) => {
 
 describe("Headline Component", () => {
   describe("Checking PropTypes", () => {
-    it("Should not throw a warning", () => {
+    it("It should not throw an error", () => {
       const expectedProps = {
-        header: "Test Header",
-        desc: "Test Desc",
+        header: "I am header",
+        desc: "I am description",
         tempArr: [
           {
-            fName: "Test fName",
-            lName: "Test lName",
-            email: "test@email.com",
+            fName: "First Name",
+            lName: "Last Name",
+            email: "allinone644@gmail.com",
             age: 23,
             onlineStatus: false,
           },
         ],
       };
-      const propsErr = checkProps(Headline, expectedProps);
-      expect(propsErr).toBeUndefined();
+
+      const propsErrors = checkPropTypes(
+        Headline.propTypes,
+        expectedProps,
+        "props",
+        Headline.name
+      );
+      expect(propsErrors).toBeUndefined();
     });
   });
 
@@ -41,17 +49,17 @@ describe("Headline Component", () => {
     });
 
     it("Should render without errors", () => {
-      const component = findByTestAtrr(wrapper, "HeadlineComponent");
+      const component = findByTestAttr(wrapper, "HeadlineComponent");
       expect(component.length).toBe(1);
     });
 
     it("Should render a H1", () => {
-      const h1 = findByTestAtrr(wrapper, "header");
+      const h1 = findByTestAttr(wrapper, "header");
       expect(h1.length).toBe(1);
     });
 
     it("Should render a desc", () => {
-      const desc = findByTestAtrr(wrapper, "desc");
+      const desc = findByTestAttr(wrapper, "desc");
       expect(desc.length).toBe(1);
     });
   });
@@ -63,7 +71,7 @@ describe("Headline Component", () => {
     });
 
     it("Should not render", () => {
-      const component = findByTestAtrr(wrapper, "HeadlineComponent");
+      const component = findByTestAttr(wrapper, "HeadlineComponent");
       expect(component.length).toBe(0);
     });
   });
